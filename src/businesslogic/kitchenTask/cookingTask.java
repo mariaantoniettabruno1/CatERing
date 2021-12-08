@@ -2,21 +2,22 @@ package businesslogic.kitchenTask;
 
 import businesslogic.recipe.Recipe;
 import businesslogic.turn.Turn;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class cookingTask {
     private Recipe recipe;
-    private ArrayList<Turn> turn;
-    private double preparation_time;
+    private ObservableList<Turn> turn;
+    private Double preparation_time;
     private Integer quantity;
     private Integer difficulty;
     private Integer portions;
     private Integer importance;
     private boolean completed = false;
 
-    public cookingTask create(Recipe recipe, ArrayList<Turn> turn, double preparation_time, Integer quantity, Integer difficulty, Integer portions, Integer importance) {
+    public cookingTask create(Recipe recipe, ObservableList<Turn> turn, Double preparation_time, Integer quantity, Integer difficulty, Integer portions, Integer importance) {
         this.recipe = recipe;
         this.turn = turn;
         this.preparation_time = preparation_time;
@@ -42,7 +43,7 @@ public class cookingTask {
     }
 
     public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+        if(quantity!=null && quantity>0)this.quantity = quantity;
     }
 
     public Integer getDifficulty() {
@@ -50,7 +51,7 @@ public class cookingTask {
     }
 
     public void setDifficulty(Integer difficulty) {
-        this.difficulty = difficulty;
+        if(difficulty!=null) this.difficulty = difficulty;
     }
 
     public Integer getPortions() {
@@ -58,7 +59,7 @@ public class cookingTask {
     }
 
     public void setPortions(Integer portions) {
-        this.portions = portions;
+        if (difficulty!=null && portions>0) this.portions = portions;
     }
 
     public Integer getImportance() {
@@ -66,7 +67,7 @@ public class cookingTask {
     }
 
     public void setImportance(Integer importance) {
-        this.importance = importance;
+        if (importance!=null)this.importance = importance;
     }
 
     public boolean isCompleted() {

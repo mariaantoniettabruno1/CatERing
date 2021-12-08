@@ -3,23 +3,22 @@ package businesslogic.kitchenTask;
 import businesslogic.UseCaseLogicException;
 import businesslogic.recipe.Recipe;
 import businesslogic.turn.Turn;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class summarySheet extends cookingTask {
-    private final ArrayList<cookingTask> sheetCookingTask;
+    private final ObservableList<cookingTask> sheetCookingTask;
 
-    public summarySheet(ArrayList<cookingTask> sheetCookingTask) {
+    public summarySheet(ObservableList<cookingTask> sheetCookingTask) {
         this.sheetCookingTask = sheetCookingTask;
     }
 
-    public summarySheet() {
-        this.sheetCookingTask = new ArrayList<cookingTask>();
-    }
 
-    public void addCookingTask(Recipe recipe, ArrayList<Turn> turn, double preparation_time, Integer quantity, Integer difficulty, Integer portions, Integer importance) throws UseCaseLogicException {
+
+    public void addCookingTask(Recipe recipe,ObservableList<Turn> turn, double preparation_time, Integer quantity, Integer difficulty, Integer portions, Integer importance) throws UseCaseLogicException {
         if(recipe!=null && preparation_time!=0.00){
             cookingTask ctsk = create(recipe, turn, preparation_time, quantity, difficulty, portions, importance);
             sheetCookingTask.add(ctsk);
@@ -32,7 +31,7 @@ public class summarySheet extends cookingTask {
         sheetCookingTask.remove(ctsk);
     }
 
-    public void editCookingTask(ArrayList<Turn> turn, double preparation_time, Integer quantity, Integer portions, Integer difficulty, Integer importance, cookingTask ctsk)throws UseCaseLogicException {
+    public void editCookingTask(ObservableList<Turn> turn, double preparation_time, Integer quantity, Integer portions, Integer difficulty, Integer importance, cookingTask ctsk)throws UseCaseLogicException {
         if (preparation_time!=0.00) {
             ctsk.setDifficulty(difficulty);
             ctsk.setImportance(importance);
@@ -53,9 +52,10 @@ public class summarySheet extends cookingTask {
         }
 
     }
-public ArrayList<cookingTask> openSummarySheet(){
+public ObservableList<cookingTask> openSummarySheet(){
         return this.sheetCookingTask;
 }
+
 public void makeCookingTaskDone(cookingTask ctsk){
         ctsk.setCompleted(true);
 }
