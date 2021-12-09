@@ -16,10 +16,6 @@ public class kitchenTaskManager {
         kitchenTaskRecivers = new ArrayList<>();
     }
 
-    public summarySheet createSummarySheet() throws UseCaseLogicException {
-
-        return currentSheet;
-    }
 
     //event sender methods
 
@@ -29,7 +25,6 @@ public class kitchenTaskManager {
         }
     }
 
-    ;
 
     public void notifyCookingTaskDeleted(cookingTask ctsk) {
         for (kitchenTaskReceiver ktr : this.kitchenTaskRecivers) {

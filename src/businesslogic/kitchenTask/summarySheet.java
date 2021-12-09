@@ -3,6 +3,7 @@ package businesslogic.kitchenTask;
 import businesslogic.UseCaseLogicException;
 import businesslogic.recipe.Recipe;
 import businesslogic.turn.Turn;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
@@ -10,20 +11,18 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class summarySheet extends cookingTask {
-    private final ObservableList<cookingTask> sheetCookingTask;
+    private ObservableList<cookingTask> sheetCookingTask;
 
-    public summarySheet(ObservableList<cookingTask> sheetCookingTask) {
-        this.sheetCookingTask = sheetCookingTask;
+    public summarySheet() {
+        this.sheetCookingTask = FXCollections.observableArrayList();
     }
 
-
-
-    public void addCookingTask(Recipe recipe,ObservableList<Turn> turn, double preparation_time, Integer quantity, Integer difficulty, Integer portions, Integer importance) throws UseCaseLogicException {
-        if(recipe!=null && preparation_time!=0.00){
-            cookingTask ctsk = create(recipe, turn, preparation_time, quantity, difficulty, portions, importance);
+    public void addCookingTask(Recipe recipe, ObservableList<Turn> turn, double preparation_time, Integer quantity, Integer difficulty, Integer portions, Integer importance) throws UseCaseLogicException {
+        if (recipe != null && preparation_time != 0.00) {
+            cookingTask ctsk = new cookingTask();
+            ctsk = create(recipe, turn, preparation_time, quantity, difficulty, portions, importance);
             sheetCookingTask.add(ctsk);
-        }
-        else throw new UseCaseLogicException();
+        } else throw new UseCaseLogicException();
 
     }
 
@@ -31,15 +30,11 @@ public class summarySheet extends cookingTask {
         sheetCookingTask.remove(ctsk);
     }
 
-    public void editCookingTask(ObservableList<Turn> turn, double preparation_time, Integer quantity, Integer portions, Integer difficulty, Integer importance, cookingTask ctsk)throws UseCaseLogicException {
-        if (preparation_time!=0.00) {
+    public void editCookingTask(ObservableList<Turn> turn, Double preparation_time, Integer quantity, Integer portions, Integer difficulty, Integer importance, cookingTask ctsk) throws UseCaseLogicException {
             ctsk.setDifficulty(difficulty);
             ctsk.setImportance(importance);
             ctsk.setPortions(portions);
             ctsk.setQuantity(quantity);
-            ctsk.setPreparation_time(preparation_time);
-        }
-        else throw new UseCaseLogicException();
     }
 
     public void orderSummarySheet(boolean sortedByImportance, boolean sortedByDifficulty) throws UseCaseLogicException {
@@ -52,11 +47,12 @@ public class summarySheet extends cookingTask {
         }
 
     }
-public ObservableList<cookingTask> openSummarySheet(){
-        return this.sheetCookingTask;
-}
 
-public void makeCookingTaskDone(cookingTask ctsk){
+    public ObservableList<cookingTask> getSheetCookingTask() {
+        return sheetCookingTask;
+    }
+
+    public void makeCookingTaskDone(cookingTask ctsk) {
         ctsk.setCompleted(true);
-}
+    }
 }

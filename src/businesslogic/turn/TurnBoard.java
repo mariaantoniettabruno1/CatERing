@@ -15,7 +15,7 @@ public class TurnBoard {
     private static Map<Integer, Turn> listofTurns = new HashMap<>();
     //static method for persistence
     public static ObservableList<Turn> loadAllTurns() {
-        String query = "SELECT * FROM Turn";
+        String query = "SELECT * FROM turn";
         PersistenceManager.executeQuery(query, new ResultHandler() {
             @Override
             public void handle(ResultSet rs) throws SQLException {
@@ -45,7 +45,7 @@ public class TurnBoard {
         if (listofTurns.containsKey(id)) return listofTurns.get(id);
         Turn turn = new Turn();
 
-        String query = "SELECT * FROM Turn WHERE id = " + id;
+        String query = "SELECT * FROM turn WHERE id = " + id;
         PersistenceManager.executeQuery(query, new ResultHandler() {
             @Override
             public void handle(ResultSet rs) throws SQLException {
