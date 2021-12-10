@@ -1,5 +1,6 @@
 package businesslogic.turn;
 
+import businesslogic.kitchenTask.cookingTask;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import persistence.PersistenceManager;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 public class TurnBoard {
     private static Map<Integer, Turn> listofTurns = new HashMap<>();
+
     //static method for persistence
     public static ObservableList<Turn> loadAllTurns() {
         String query = "SELECT * FROM turn";
@@ -26,7 +28,7 @@ public class TurnBoard {
                     turn.time = rs.getTime("time");
 
                 } else {
-                    Turn turn = new Turn(rs.getDouble("duration"),rs.getTime("time"));
+                    Turn turn = new Turn(rs.getDouble("duration"), rs.getTime("time"));
                     turn.id = id;
                     listofTurns.put(turn.id, turn);
                 }
@@ -57,5 +59,20 @@ public class TurnBoard {
         });
 
         return turn;
+    }
+
+    public static ObservableList<Turn> loadTurnOfCoookingTaskById(int id) {
+
+        String query = "SELECT id_turn FROM cookingtask_has_turn WHERE id = " + id;
+        PersistenceManager.executeQuery(query, new ResultHandler() {
+            @Override
+            public void handle(ResultSet rs) throws SQLException {
+                Turn turn = loadTurnById(rs.getInt("id_turn"));
+                listofTurns.put(turn.id, turn);
+            }
+        });
+        ObservableList<Turn> turnList = FXCollections.observableArrayList(listofTurns.values());
+        turnList.sort(Comparator.comparing(Turn::getDuration).thenComparing(Turn::getTime));
+        return turnList;
     }
 }
