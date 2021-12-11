@@ -14,7 +14,7 @@ public class summarySheet extends cookingTask {
     private ObservableList<cookingTask> sheetCookingTask;
 
     public summarySheet() {
-        this.sheetCookingTask = FXCollections.observableArrayList();
+        this.sheetCookingTask = FXCollections.observableArrayList(loadAllCookingTasks());
     }
 
     public void addCookingTask(Recipe recipe, ObservableList<Turn> turn, double preparation_time, Integer quantity, Integer difficulty, Integer portions, Integer importance) throws UseCaseLogicException {
@@ -22,19 +22,22 @@ public class summarySheet extends cookingTask {
             cookingTask ctsk = new cookingTask();
             ctsk = create(recipe, turn, preparation_time, quantity, difficulty, portions, importance);
             sheetCookingTask.add(ctsk);
+            createNewCookingTask(ctsk);
         } else throw new UseCaseLogicException();
 
     }
 
     public void deleteCookingTask(cookingTask ctsk) {
         sheetCookingTask.remove(ctsk);
+        deleteCookingTaskDB(ctsk);
     }
 
     public void editCookingTask(ObservableList<Turn> turn, Double preparation_time, Integer quantity, Integer portions, Integer difficulty, Integer importance, cookingTask ctsk) throws UseCaseLogicException {
-            ctsk.setDifficulty(difficulty);
-            ctsk.setImportance(importance);
-            ctsk.setPortions(portions);
-            ctsk.setQuantity(quantity);
+        ctsk.setDifficulty(difficulty);
+        ctsk.setImportance(importance);
+        ctsk.setPortions(portions);
+        ctsk.setQuantity(quantity);
+        editCookingTask(ctsk);
     }
 
     public void orderSummarySheet(boolean sortedByImportance, boolean sortedByDifficulty) throws UseCaseLogicException {
@@ -54,5 +57,13 @@ public class summarySheet extends cookingTask {
 
     public void makeCookingTaskDone(cookingTask ctsk) {
         ctsk.setCompleted(true);
+        makeCookingTaskDoneDB(ctsk);
+    }
+
+    @Override
+    public String toString() {
+        return "summarySheet{" +
+                "sheetCookingTask=" + sheetCookingTask +
+                '}';
     }
 }

@@ -151,37 +151,52 @@ public class cookingTask {
 
         return result;
     }
-
+    public static ObservableList<cookingTask> loadAllCookingTasks(){
+        ObservableList<cookingTask> result = FXCollections.observableArrayList();
+        String query = "SELECT * FROM cookingTask";
+        PersistenceManager.executeQuery(query, new ResultHandler() {
+            @Override
+            public void handle(ResultSet rs) throws SQLException {
+                cookingTask ctsk = new cookingTask();
+                ctsk.recipe = Recipe.loadRecipeById(rs.getInt("id_recipe"));
+                ctsk.id = rs.getInt("id");
+                ctsk.quantity = rs.getInt("quantity");
+                ctsk.completed = rs.getBoolean("completed");
+                ctsk.importance = rs.getInt("importance");
+                ctsk.difficulty = rs.getInt("difficulty");
+                ctsk.preparation_time = rs.getDouble("preparation_time");
+                ctsk.portions = rs.getInt("portions");
+                ctsk.turn = TurnBoard.getAllTurns();
+                result.add(ctsk);
+            }
+        });
+        return result;
+    }
     public static void createNewCookingTask(cookingTask ctsk) {
-        String itemInsert = "INSERT INTO cookingtask (id_recipe,preparation_time,quantity,difficulty,portions,importance,completed) VALUES (" + ctsk.recipe.getId() + ", " + ctsk.preparation_time + ", " + ctsk.quantity + "," + ctsk.difficulty + "," + ctsk.portions + "," + ctsk.importance + "," + ctsk.completed + ");";
+        String itemInsert = "INSERT INTO cookingtask (id_recipe,preparation_time,quantity,difficulty,portions,importance) VALUES (" + ctsk.recipe.getId() + ", " + ctsk.preparation_time + ", " + ctsk.quantity + "," + ctsk.difficulty + "," + ctsk.portions + "," + ctsk.importance + ");";
         PersistenceManager.executeUpdate(itemInsert);
         ctsk.id = PersistenceManager.getLastId();
         for (Turn turn : ctsk.turn) {
-            String itemTurnInsert = "INSERT INTO cookingtask_has_turn (id_cookingtask, id_turn) VALUES (" + ctsk.id + "," + turn + ");";
+            String itemTurnInsert = "INSERT INTO cookingtask_has_turn (id_cookingtask, id_turn) VALUES (" + ctsk.id + "," + turn.getId() + ");";
             PersistenceManager.executeUpdate(itemTurnInsert);
         }
 
     }
 
-    public static void editNewCookingTask(cookingTask ctsk) {
+    public static void editCookingTask(cookingTask ctsk) {
         String itemEdit = "UPDATE  cookingtask SET preparation_time="+ctsk.preparation_time+",quantity="+ctsk.quantity+",difficulty="+ctsk.difficulty+",portions="+ctsk.portions+",importance="+ctsk.importance+" WHERE id="+ctsk.id+";";
         PersistenceManager.executeUpdate(itemEdit);
-        for (Turn turn : ctsk.turn) {
-            String itemTurnEdit = "UPDATE cookingtask_has_turn SET id_turn WHERE id_cookingtask="+ctsk.id+ ";";
-            PersistenceManager.executeUpdate(itemTurnEdit);
-        }
-
     }
 
-    public void makeCookingTaskDone(cookingTask ctsk) {
+    public void makeCookingTaskDoneDB(cookingTask ctsk) {
         String completedItem = "UPDATE  cookingtask SET completed=true WHERE id="+ctsk.id+";";
         PersistenceManager.executeUpdate(completedItem);
 
 
     }
 
-    public void deleteCookingTask(cookingTask ctsk) {
-        String remove = "DELETE  FROM cookingtask WHERE id =" + ctsk.id + " AND completed=true";
+    public void deleteCookingTaskDB(cookingTask ctsk) {
+        String remove = "DELETE FROM cookingtask WHERE id =" + ctsk.id+";";
         PersistenceManager.executeUpdate(remove);
     }
 

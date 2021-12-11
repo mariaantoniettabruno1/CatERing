@@ -23,7 +23,7 @@ public class TestKitchenTask {
 
             System.out.println("\n Test for open current summarySheet");
             summarySheet newSheet = new summarySheet();
-            System.out.println(newSheet.getSheetCookingTask());
+            System.out.println( newSheet.getSheetCookingTask());
 
             System.out.println("\n Test for create cooking task");
             ObservableList<Recipe> recipeList = CatERing.getInstance().getRecipeManager().getRecipes();
@@ -40,7 +40,7 @@ public class TestKitchenTask {
 
             System.out.println("\n Specify quantity, portions, difficulty and importance ");
             ObservableList<cookingTask> cookingTaskList = newSheet.getSheetCookingTask();
-            newSheet.editCookingTask(null, null,3,5,1,2,cookingTaskList.get(0));
+            newSheet.editCookingTask(null, null,3,5,1,2,cookingTaskList.get(5));
            // CatERing.getInstance().getKitchenTaskManager().editCookingTask(null, null,2,4,2,1,cookingTaskList.get(2));
            // CatERing.getInstance().getKitchenTaskManager().editCookingTask(null, null,1,3,4,5,cookingTaskList.get(3));
 
@@ -58,7 +58,7 @@ public class TestKitchenTask {
             newSheet.makeCookingTaskDone(cookingTaskList.get(0));
 
             System.out.println("\n Test for delete cooking task");
-           newSheet.deleteCookingTask(cookingTaskList.get(0));
+           newSheet.deleteCookingTask(cookingTaskList.get(5));
 
         } catch (UseCaseLogicException e) {
             e.printStackTrace();
