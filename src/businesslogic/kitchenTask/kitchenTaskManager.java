@@ -61,30 +61,38 @@ public class kitchenTaskManager {
     //operation methods
 
     public void addCookingTask(Recipe recipe, ObservableList<Turn> turn, Double preparation_time, Integer quantity, Integer difficulty, Integer portions, Integer importance) throws UseCaseLogicException {
-        currentSheet.addCookingTask(recipe, turn, preparation_time, quantity, portions, difficulty, importance);
+           currentSheet.addCookingTask(recipe, turn, preparation_time, quantity, portions, difficulty, importance);
+
     }
 
     public void deleteCookingTask(cookingTask ctsk) {
         currentSheet.deleteCookingTask(ctsk);
+
     }
 
     public void editCookingTask(ObservableList<Turn> turn, Double preparation_time, Integer quantity, Integer portions, Integer difficulty, Integer importance, cookingTask ctsk) throws UseCaseLogicException {
         currentSheet.editCookingTask(turn, preparation_time, quantity, portions, difficulty, importance, ctsk);
+
     }
 
     public void orderSummarySheet(boolean sortedByImportance, boolean sortedByDifficulty) throws UseCaseLogicException {
         currentSheet.orderSummarySheet(sortedByImportance, sortedByDifficulty);
+
     }
 
     public summarySheet openSummarySheet() {
+        if(this.currentSheet==null)
+            currentSheet = new summarySheet();
         return this.currentSheet;
     }
+
     public void setCurrentSheet(summarySheet currentSheet){
         this.currentSheet = currentSheet;
     }
 
     public void makeCookingTaskDone(cookingTask ctsk) {
         currentSheet.makeCookingTaskDone(ctsk);
+
     }
 
     public void addReceiver(kitchenTaskReceiver ktr) {

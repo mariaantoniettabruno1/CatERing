@@ -6,9 +6,7 @@ import businesslogic.turn.Turn;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+
 
 public class summarySheet extends cookingTask {
     private ObservableList<cookingTask> sheetCookingTask;
@@ -18,8 +16,8 @@ public class summarySheet extends cookingTask {
     }
 
     public void addCookingTask(Recipe recipe, ObservableList<Turn> turn, double preparation_time, Integer quantity, Integer difficulty, Integer portions, Integer importance) throws UseCaseLogicException {
+        cookingTask ctsk = new cookingTask();
         if (recipe != null && preparation_time != 0.00) {
-            cookingTask ctsk = new cookingTask();
             ctsk = create(recipe, turn, preparation_time, quantity, difficulty, portions, importance);
             sheetCookingTask.add(ctsk);
             createNewCookingTask(ctsk);

@@ -51,6 +51,12 @@ public class Turn {
         this.id = id;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Turn{" +
+                "id=" + id +
+                ", duration=" + duration +
+                ", time=" + time +
+                '}';
+    }
 }
